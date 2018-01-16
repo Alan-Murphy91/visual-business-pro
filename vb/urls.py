@@ -17,12 +17,17 @@ from django.conf.urls import url
 from django.contrib import admin
 from cover import views as cover_views
 from profiles import views as profiles_views
+from finance import views as finance_views
 
 urlpatterns = [
-    url(r'^admin/', admin.site.urls, name="index"),
-    url(r'^$', cover_views.get_index),
+    url(r'^admin/', admin.site.urls),
+    url(r'^$', cover_views.get_index, name='index'),
     url(r'^register/$', profiles_views.register, name='register'),
     url(r'^login/$', profiles_views.login, name='login'),
     url(r'^logout/$', profiles_views.logout, name='logout'),
     url(r'^profile/$', profiles_views.profile, name='profile'),
+    url(r'^newemployee/$', finance_views.new_employee, name='newemployee'),
+    url(r'^newinvoice/$', finance_views.new_invoice, name='newinvoice'),
+    url(r'^newcredit/$', finance_views.new_credit, name='newcredit'),
+    url(r'^credits/$', finance_views.show_credit, name='credits'),
 ]

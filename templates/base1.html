@@ -6,32 +6,76 @@
     <title>Visual Business Pro</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/3.3.6/cerulean/bootstrap.min.css">
-    <link rel="stylesheet" href="{% static "css/style.css" %}">
+    <style>
+        .navbar-inverse { background-color: #222222}
+.navbar-inverse .navbar-nav>.active>a:hover,.navbar-inverse .navbar-nav>li>a:hover, .navbar-inverse .navbar-nav>li>a:focus { background-color: #}
+.navbar-inverse .navbar-nav>.active>a,.navbar-inverse .navbar-nav>.open>a,.navbar-inverse .navbar-nav>.open>a, .navbar-inverse .navbar-nav>.open>a:hover,.navbar-inverse .navbar-nav>.open>a, .navbar-inverse .navbar-nav>.open>a:hover, .navbar-inverse .navbar-nav>.open>a:focus { background-color: #080808}
+.dropdown-menu { background-color: #ffffff}
+.dropdown-menu>li>a:hover, .dropdown-menu>li>a:focus { background-color: #428bca}
+.navbar-inverse { background-image: none; }
+.dropdown-menu>li>a:hover, .dropdown-menu>li>a:focus { background-image: none; }
+.navbar-inverse { border-color: #080808}
+.navbar-inverse .navbar-brand { color: #999999}
+.navbar-inverse .navbar-brand:hover { color: #ffffff}
+.navbar-inverse .navbar-nav>li>a { color: #999999}
+.navbar-inverse .navbar-nav>li>a:hover, .navbar-inverse .navbar-nav>li>a:focus { color: #ffffff}
+.navbar-inverse .navbar-nav>.active>a,.navbar-inverse .navbar-nav>.open>a, .navbar-inverse .navbar-nav>.open>a:hover, .navbar-inverse .navbar-nav>.open>a:focus { color: #ffffff}
+.navbar-inverse .navbar-nav>.active>a:hover, .navbar-inverse .navbar-nav>.active>a:focus { color: #ffffff}
+.dropdown-menu>li>a { color: #333333}
+.dropdown-menu>li>a:hover, .dropdown-menu>li>a:focus { color: #ffffff}
+.navbar-inverse .navbar-nav>.dropdown>a .caret { border-top-color: #999999}
+.navbar-inverse .navbar-nav>.dropdown>a:hover .caret { border-top-color: #ffffff}
+.navbar-inverse .navbar-nav>.dropdown>a .caret { border-bottom-color: #999999}
+.navbar-inverse .navbar-nav>.dropdown>a:hover .caret { border-bottom-color: #ffffff}
+    </style>
 </head>
 <body>
+
 <nav class="navbar navbar-inverse">
-        <div class="container">
-            <div class="navbar-header">
-             <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>                        
-            </button>
-            <a class="navbar-brand" href="http://127.0.0.1:8000">VBP</a>
-            </div>
-            <div class="collapse navbar-collapse" id="myNavbar">
-            <ul class="nav navbar-nav">
-                    {% if user.is_authenticated %}
-                    <li><a href="{% url 'logout' %}">Log Out</a></li>
-                    {% else %}
-                    {% endif %}
-            </ul>
-            <ul class="nav navbar-nav navbar-right">
-                <li><a href="{% url 'register' %}">Register</a></li>
-                <li><a href="{% url 'login' %}"><span class="glyphicon glyphicon-log-in"></span> My Dashboard</a></li>
-            </ul>
-            </div>
-        </div>
+            <div class="container">
+                        <div class="navbar-header">
+                          <button class="navbar-toggle" type="button" data-toggle="collapse" data-target=".bs-navbar-collapse">
+                            <span class="sr-only">Toggle navigation</span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                          </button>
+                          <a href="{% url 'index' %}" class="navbar-brand">VBP</a>
+                        </div>
+                        <nav class="collapse navbar-collapse bs-navbar-collapse" role="navigation">
+                        {% if user.is_authenticated %}  
+                          <ul class="nav navbar-nav navbar-right">
+                                <li><a href="{% url 'credits' %}">Credit</a></li>
+                                <li><a href="{% url 'logout' %}">Debt</a></li>
+                                <li><a href="{% url 'logout' %}">Site analytics</a></li>
+                                <li><a href="{% url 'logout' %}">Workforce</a></li>
+                                <li class="dropdown">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">Add <b class="caret"></b></a>
+                                <ul class="dropdown-menu">
+                                        <li><a href="{% url 'newemployee' %}">Add an Employee</a></li>
+                                        <li><a href="{% url 'newinvoice' %}">Add a New Invoice</a></li>
+                                        <li><a href="{% url 'newcredit' %}">Add a New Credit</a></li>
+                                </ul>
+                              </li>
+                            <li>
+                              <a class="glyphicon glyphicon-log-in" href="{% url 'logout' %}"> My Dashboard </a>
+                            </li>
+                            <li>
+                                <a href="{% url 'logout' %}">Logout</a>
+                            </li>
+                          </ul>
+                          {% else %}
+                          <ul class="nav navbar-nav navbar-right">
+                                <li>
+                                    <a href="{% url 'register' %}">Register</a>
+                                </li>
+                                <li>
+                                    <a class="glyphicon glyphicon-tasks" href="{% url 'login' %}"> My Dashboard</a>
+                                </li>
+                              </ul>
+                              {% endif %}                          
+                </nav>
+                </div>
 </nav>
 
 <div class="container">
