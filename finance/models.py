@@ -24,4 +24,7 @@ class Credit(models.Model):
     name = models.CharField(max_length=200)
     payment_reference = models.IntegerField()
     amount = models.IntegerField()
+    payment_type = models.CharField(max_length=200,default='Paypal')
+    country = models.CharField(max_length=200,default='Ireland')
+    payment_location = models.CharField(max_length=200,default='On-site')
     date = models.DateTimeField(auto_now_add=True)

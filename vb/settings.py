@@ -40,7 +40,8 @@ INSTALLED_APPS = [
     'django_forms_bootstrap',
     'cover',
     'profiles',
-    'finance'
+    'finance',
+    'rest_framework'
 ]
 
 MIDDLEWARE = [

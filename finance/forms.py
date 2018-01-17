@@ -17,4 +17,4 @@ class CreditForm(forms.ModelForm):
  
     class Meta:
         model = Credit
-        fields = ('name', 'payment_reference', 'amount')                
+        fields = ('name', 'payment_reference', 'amount', 'payment_type', 'country', 'payment_location')

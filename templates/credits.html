@@ -1,7 +1,207 @@
 {% extends "base1.html" %}
 {% block content %}
-    <h1>This is the data dashboard</h1>
-    <div>
-    </div>
+<div class="container-fluid">
+
+        <div class="row">
+          <div class="col-sm-8">
+            <div class="chart-wrapper">
+              <div class="chart-title">
+                Cell Title
+              </div>
+              <div class="chart-stage">
+                    <div id="timeChart"></div>
+              </div>
+            </div>
+          </div>
+          <div class="col-sm-4">
+            <div class="chart-wrapper">
+              <div class="chart-title">
+                Cell Title
+              </div>
+              <div class="chart-stage">
+                    <div id="payLocChart"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+    
+        <div class="row">
+          <div class="col-sm-6 col-md-4">
+            <div class="chart-wrapper">
+              <div class="chart-title">
+                Cell Title
+              </div>
+              <div class="chart-stage">
+                    <div id="payRefChart"></div>
+              </div>
+            </div>
+          </div>
+          <div class="col-sm-6 col-md-4">
+            <div class="chart-wrapper">
+              <div class="chart-title">
+                Cell Title
+              </div>
+              <div class="chart-stage">
+                    <div id="countryChart"></div>
+              </div>
+            </div>
+          </div>
+          <div class="col-sm-6 col-md-4">
+            <div class="chart-wrapper">
+              <div class="chart-title">
+                Cell Title
+              </div>
+              <div class="chart-stage">
+                    <div id="nameChart"></div>
+              </div>
+            </div>
+          </div>
+          <div class="col-sm-6 col-md-4">
+            <div class="chart-wrapper">
+              <div class="chart-title">
+                Cell Title
+              </div>
+              <div class="chart-stage">
+                    <div id="payTypeChart"></div>
+              </div>
+            </div>
+          </div>
+          <div class="col-sm-6 col-md-4">
+            <div class="chart-wrapper">
+              <div class="chart-title">
+                Cell Title
+              </div>
+              <div class="chart-stage">
+                    <div id="numberChart"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+    
+      </div>
+    <script>
+        $(document).ready(function(){
+        var endpoint = 'api/data/';
+
+        $.ajax({
+            method: 'GET',
+            url: endpoint,
+            success: function(data){
+                console.log(data);
+                var ndx = crossfilter(data);
+
+                var nameDim = ndx.dimension(function(d) { return d["name"]; });
+                var dateDim = ndx.dimension(function(d) { return d["date"]; });
+                var payRefDim = ndx.dimension(function(d) { return d["payment_reference"]; });
+                var amountDim = ndx.dimension(function(d) { return d["amount"]; });
+                var payTypeDim = ndx.dimension(function(d) { return d["payment_type"]; });
+                var countryDim = ndx.dimension(function(d) { return d["country"]; });
+                var payLocDim = ndx.dimension(function(d) { return d["payment_location"]; });
+                var allDim = ndx.dimension(function(d) {return d;});
+                
+                var nameGroup = nameDim.group();
+                var dateGroup = dateDim.group();
+                var payRefGroup =  payRefDim.group();
+                var amountGroup = amountDim.group();
+                var payTypeGroup = payTypeDim.group();
+                var countryGroup = countryDim.group();
+                var payLocGroup = payLocDim.group();
+                var all = ndx.groupAll();
+
+                var startDate = data[0].date;
+                var endDate = data[data.length-1].date;
+
+                var nameChart = dc.rowChart("#nameChart");
+                var number = dc.numberDisplay("#numberChart");
+                var payTypeChart = dc.rowChart("#payTypeChart");
+                var countryChart = dc.rowChart("#countryChart");
+                var payRefChart = dc.rowChart("#payRefChart");
+                var locationChart = dc.pieChart("#payLocChart");
+                var timeChart = dc.barChart("#timeChart");
+
+
+                nameChart
+                    .width(300)
+                    .height(360)
+                    .dimension(amountDim)
+                    .group(amountGroup)
+                    .ordering(function(d) { return -d.value })
+                    .colors(d3.scale.ordinal().range(['#51F5E0']))
+                    .elasticX(true)
+                    .xAxis().ticks(6);
+                
+                number
+                    .formatNumber(d3.format("d"))
+                    .valueAccessor(function(d){return d; })
+                    .group(all);
+
+                payTypeChart
+                    .width(300)
+                    .height(360)
+                    .dimension(payTypeDim)
+                    .group(payTypeGroup)
+                    .ordering(function(d) { return -d.value })
+                    .colors(d3.scale.ordinal().range(['#51F5E0']))
+                    .elasticX(true)
+                    .xAxis().ticks(6);
+
+                countryChart
+                    .width(300)
+                    .height(360)
+                    .dimension(countryDim)
+                    .group(countryGroup)
+                    .ordering(function(d) { return -d.value })
+                    .colors(d3.scale.ordinal().range(['#51F5E0']))
+                    .elasticX(true)
+                    .xAxis().ticks(6);
+
+                payRefChart
+                    .width(300)
+                    .height(360)
+                    .dimension(payRefDim)
+                    .group(payRefGroup)
+                    .ordering(function(d) { return -d.value })
+                    .colors(d3.scale.ordinal().range(['#51F5E0']))
+                    .elasticX(true)
+                    .xAxis().ticks(6);
+
+                locationChart
+                    .width(400)
+                    .height(360)
+                    .radius(160)
+                    .innerRadius(45)
+                    .dimension(payLocDim)
+                    .group(payLocGroup)
+                    .colors(d3.scale.ordinal().range(['#FDB592','#FEE29E','#50EFDA', '#692D8D', '#D564AB']))
+                    .on('renderlet', function (chart) {
+                        chart.select("svg > g").attr("transform", "translate(200,170)");
+                    })
+                    .drawPaths(true)
+                    .externalRadiusPadding(60)
+                    .minAngleForLabel(0)
+                    .externalLabels(40)
+                    .renderLabel(true);
+
+                timeChart
+                    .width(650)
+                    .height(240)
+                    .margins({top: 10, right: 50, bottom: 20, left: 20})
+                    .dimension(dateDim)
+                    .group(dateGroup)
+                    .transitionDuration(500)
+                    .x(d3.time.scale().domain([startDate, endDate]))
+                    .elasticY(true)
+                    .colors(['#52FDE7'])
+                    .yAxis().ticks(2);
+
+
+                dc.renderAll();
+    
+
+
+            }
+        })
+    });
+    </script>
 
 {% endblock %}

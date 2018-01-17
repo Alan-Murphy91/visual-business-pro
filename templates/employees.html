@@ -1,0 +1,21 @@
+{% extends "base1.html" %}
+{% block content %}
+    <h1>This is the Credit dashboard</h1>
+    <div>
+    </div>
+    <script>
+        $(document).ready(function(){
+        var endpoint = 'api/data/';
+
+        $.ajax({
+            method: 'GET',
+            url: endpoint,
+            success: function(data){
+                console.log(data);
+                console.log(typeof data);
+            }
+        })
+    });
+    </script>
+
+{% endblock %}

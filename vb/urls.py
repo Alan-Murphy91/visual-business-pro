@@ -18,6 +18,7 @@ from django.contrib import admin
 from cover import views as cover_views
 from profiles import views as profiles_views
 from finance import views as finance_views
+from finance.views import EmpView, CreditView 
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
@@ -30,4 +31,7 @@ urlpatterns = [
     url(r'^newinvoice/$', finance_views.new_invoice, name='newinvoice'),
     url(r'^newcredit/$', finance_views.new_credit, name='newcredit'),
     url(r'^credits/$', finance_views.show_credit, name='credits'),
+    url(r'^credits/$', finance_views.show_employee, name='employees'),
+    url(r'^employees/api/data/$', EmpView.as_view()),
+    url(r'^credits/api/data/$', CreditView.as_view()),
 ]
