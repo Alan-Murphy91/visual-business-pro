@@ -11,7 +11,7 @@ https://docs.djangoproject.com/en/1.11/ref/settings/
 """
 
 import os
-from django.utils.crypto import get_random_string
+
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
@@ -20,7 +20,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # See https://docs.djangoproject.com/en/1.11/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = ')#r2c1lp=cn)h9r^*8vg&gef5!#e-mchut_w7e6lohq2mp70_2'
+SECRET_KEY = '6$4!fb)oy%-mw=+no2lgwn5%#jzt5e1c(luu92(-5x()oh=@!v'
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -40,7 +40,6 @@ INSTALLED_APPS = [
     'django_forms_bootstrap',
     'cover',
     'profiles',
-    'finance',
     'rest_framework'
 ]
 
@@ -129,12 +128,9 @@ STATICFILES_DIRS = (
     'blog_prj/static/',
 )
 
-AUTH_USER_MODEL = 'profiles.User'
-
 AUTHENTICATION_BACKENDS = (
     'django.contrib.auth.backends.ModelBackend',
     'profiles.account_check.NewAuth',
 )
 
-chars = 'abcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*(-_=+)'
-SECRET_KEY = get_random_string(50, chars)
+AUTH_USER_MODEL = 'profiles.User'

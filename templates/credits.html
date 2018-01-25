@@ -68,7 +68,7 @@
             method: 'GET',
             url: endpoint,
             success: function(data){
-
+                console.log(data);
                var parseDate = d3.time.format("%Y-%d-%m").parse;
                data.forEach(function(d) {
                   d.date = d.date.slice(0,10);
@@ -93,7 +93,6 @@
                 var countryGroup = countryDim.group();
                 var payLocGroup = payLocDim.group();
                 var all = ndx.groupAll();
-
 
                 var startDate = dateDim.bottom(1)[0].date;
                 var endDate = dateDim.top(1)[0].date;

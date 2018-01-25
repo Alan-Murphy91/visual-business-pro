@@ -2,6 +2,7 @@ from django import forms
 from django.contrib.auth.forms import UserCreationForm
 from profiles.models import User
 from django.core.exceptions import ValidationError 
+from .models import Employee, Invoice, Credit
  
 class UserRegistrationForm(UserCreationForm):
     password1 = forms.CharField(
@@ -43,3 +44,23 @@ class UserRegistrationForm(UserCreationForm):
 class UserLoginForm(forms.Form):
     email = forms.EmailField()
     password = forms.CharField(widget=forms.PasswordInput)
+
+
+class EmployeeForm(forms.ModelForm):
+ 
+    class Meta:
+        model = Employee
+        fields = ('name', 'contact','social_security', 'job_title', 'weekly_salary')
+
+class InvoiceForm(forms.ModelForm):
+ 
+    class Meta:
+        model = Invoice
+        fields = ('name', 'invoice_reference', 'amount')
+
+class CreditForm(forms.ModelForm):
+ 
+    class Meta:
+        model = Credit
+        exclude = ['user']
+        fields = ('name', 'payment_reference', 'amount', 'payment_type', 'country', 'payment_location')

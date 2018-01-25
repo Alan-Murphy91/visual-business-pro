@@ -17,8 +17,6 @@ from django.conf.urls import url
 from django.contrib import admin
 from cover import views as cover_views
 from profiles import views as profiles_views
-from finance import views as finance_views
-from finance.views import EmpView, CreditView 
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
@@ -27,11 +25,11 @@ urlpatterns = [
     url(r'^login/$', profiles_views.login, name='login'),
     url(r'^logout/$', profiles_views.logout, name='logout'),
     url(r'^profile/$', profiles_views.profile, name='profile'),
-    url(r'^newemployee/$', finance_views.new_employee, name='newemployee'),
-    url(r'^newinvoice/$', finance_views.new_invoice, name='newinvoice'),
-    url(r'^newcredit/$', finance_views.new_credit, name='newcredit'),
-    url(r'^credits/$', finance_views.show_credit, name='credits'),
-    url(r'^credits/$', finance_views.show_employee, name='employees'),
-    url(r'^employees/api/data/$', EmpView.as_view()),
-    url(r'^credits/api/data/$', CreditView.as_view()),
+    url(r'^newemployee/$', profiles_views.new_employee, name='newemployee'),
+    url(r'^newinvoice/$', profiles_views.new_invoice, name='newinvoice'),
+    url(r'^newcredit/$', profiles_views.new_credit, name='newcredit'),
+    url(r'^credits/$', profiles_views.show_credit, name='credits'),
+    url(r'^credits/$', profiles_views.show_employee, name='employees'),
+    url(r'^employees/api/data/$', profiles_views.EmpView.as_view()),
+    url(r'^credits/api/data/$', profiles_views.CreditView.as_view()),
 ]
