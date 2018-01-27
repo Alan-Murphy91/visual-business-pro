@@ -7,6 +7,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     {% include 'base/basestyle.html' %}
     {% include 'base/basejs.html' %}
+    {% include 'base/stripe.html' %}
+    {% block head_js %}
+    {% endblock %}
 </head>
 <body>
 
@@ -25,7 +28,7 @@
                         {% if user.is_authenticated %}  
                           <ul class="nav navbar-nav navbar-right">
                                 <li><a href="{% url 'credits' %}">Credit</a></li>
-                                <li><a href="{% url 'logout' %}">Debt</a></li>
+                                <li><a href="{% url 'invoices' %}">Debt</a></li>
                                 <li><a href="{% url 'logout' %}">Site analytics</a></li>
                                 <li><a href="{% url 'logout' %}">Workforce</a></li>
                                 <li class="dropdown">

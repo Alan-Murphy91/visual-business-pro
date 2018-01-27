@@ -1,0 +1,167 @@
+{% extends "base1.html" %}
+{% block content %}
+
+
+<div class="container">
+    <div class="row">
+        <div class="col-xs-12 col-sm-12 col-md-8">
+            <div class="chart-wrapper">
+                <div class="chart-title">
+                  Number of Events
+                </div>
+                <div class="chart-stage">
+                  <div id="dateChart"></div>
+                </div>
+              </div>
+        </div>
+        <div class="col-xs-12 col-sm-12 col-md-4">
+            <div class="chart-wrapper">
+                <div class="chart-title">
+                  Number of Events
+                </div>
+                <div class="chart-stage">
+                  <div id="payFreqChart"></div>
+                </div>
+                <br/>
+              </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-xs-12 col-sm-12 col-md-4">
+            <div class="chart-wrapper">
+                <div class="chart-title">
+                  Cash
+                </div>
+                <div class="chart-stage">
+                  <div id="typeChart"></div>
+                </div>
+              </div>
+        </div>
+        <div class="col-xs-12 col-sm-12 col-md-4">
+            <div class="chart-wrapper">
+                <div class="chart-title">
+                  Number of Events
+                </div>
+                <div class="chart-stage">
+                    <div id="nameChart"></div>
+                </div>
+              </div>
+        </div>
+        <div class="col-xs-12 col-sm-12 col-md-4">
+            <div class="chart-wrapper">
+                <div class="chart-title">
+                  Number of Events
+                </div>
+                <div class="xc chart-stage">
+                  <div id="amountChart"></div>
+                </div>
+              </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    $(document).ready(function(){
+    var endpoint = 'api/data/';
+    var total = 0;
+    $.ajax({
+        method: 'GET',
+        url: endpoint,
+        success: function(data){
+
+            var parseDate = d3.time.format("%Y-%d-%m").parse;
+               data.forEach(function(d) {
+                  d.date = d.date.slice(0,10);
+                  d.date = parseDate(d.date);
+                });
+            
+            var ndx = crossfilter(data);
+
+            var nameDim = ndx.dimension(function(d) { return d["name"]; });
+            var typeDim = ndx.dimension(function(d) { return d["type"]; });
+            var payFreqDim = ndx.dimension(function(d) { return d["payment_frequency"]; });
+            var amountDim = ndx.dimension(function(d) { return d["amount"]; });
+            var dateDim = ndx.dimension(function(d) { return d["date"]; });
+            
+            var allDim = ndx.dimension(function(d) {return d;});
+
+            var nameGroup = nameDim.group();
+            var typeGroup = typeDim.group();
+            var payFreqGroup =  payFreqDim.group();
+            var amountGroup = amountDim.group();
+            var dateGroup = dateDim.group();
+            var all = ndx.groupAll();
+            var totAll = ndx.groupAll().reduceSum(function(d){
+                return d["amount"]
+            });
+
+            var startDate = dateDim.bottom(1)[0].date;
+            var endDate = dateDim.top(1)[0].date;
+
+            var nameChart = dc.rowChart("#nameChart");
+            var typeChart = dc.numberDisplay("#typeChart");
+            var payFreqChart = dc.pieChart("#payFreqChart");
+            var amountChart = dc.numberDisplay("#amountChart");
+            var dateChart = dc.barChart("#dateChart");
+
+
+                nameChart
+                    //.width(300)
+                    .height(280)
+                    .dimension(nameDim)
+                    .group(nameGroup)
+                    .ordering(function(d) { return -d.value })
+                    .colors(d3.scale.ordinal().range(['#51F5E0']))
+                    .elasticX(true)
+                    .xAxis().ticks(6);
+                
+                amountChart
+                    .height(280)
+                    .formatNumber(d3.format("d"))
+                    .valueAccessor(function(d){
+                        return d; })
+                    .group(all);
+
+                typeChart
+                    .height(280)
+                    .valueAccessor(function(d){
+                        return d; })
+                    .group(totAll);
+
+                payFreqChart
+                    //.width(400)
+                    .height(280)
+                    .radius(160)
+                    .innerRadius(45)
+                    .dimension(payFreqDim)
+                    .group(payFreqGroup)
+                    .colors(d3.scale.ordinal().range(['#FDB592','#FEE29E','#50EFDA', '#692D8D', '#D564AB']))
+                    // .on('renderlet', function (chart) {
+                    //     chart.select("svg > g").attr("transform", "translate(200,170)");
+                    // })
+                    .drawPaths(true)
+                    .externalRadiusPadding(60)
+                    .minAngleForLabel(0)
+                    .externalLabels(40)
+                    .renderLabel(true);
+
+                dateChart
+                    .width(650)
+                    .height(280)
+                    .margins({top: 10, right: 50, bottom: 20, left: 20})
+                    .dimension(dateDim)
+                    .group(dateGroup)
+                    .transitionDuration(500)
+                    .x(d3.time.scale().domain([startDate, endDate]))
+                      .elasticY(true)
+                      .colors(['#52FDE7'])
+                    .yAxis().ticks(2);
+
+
+                dc.renderAll();
+        }
+    })
+});
+</script>
+
+{% endblock %}

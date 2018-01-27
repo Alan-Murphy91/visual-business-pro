@@ -5,6 +5,18 @@ from django.core.exceptions import ValidationError
 from .models import Employee, Invoice, Credit
  
 class UserRegistrationForm(UserCreationForm):
+    MONTH_ABBREVIATIONS = [
+        'Jan', 'Feb', 'Mar', 'Apr', 'May', 'June',
+        'July', 'Aug', 'Sept', 'Oct', 'Nov', 'Dec'
+    ]
+    MONTH_CHOICES = list(enumerate(MONTH_ABBREVIATIONS, 1))
+    YEAR_CHOICES = [(i, i) for i in range(2015, 2036)]
+ 
+    credit_card_number = forms.CharField(label='Credit card number')
+    cvv = forms.CharField(label='Security code (CVV)')
+    expiry_month = forms.ChoiceField(label="Month", choices=MONTH_CHOICES)
+    expiry_year = forms.ChoiceField(label="Year", choices=YEAR_CHOICES)
+    stripe_id = forms.CharField(widget=forms.HiddenInput)
     password1 = forms.CharField(
         label='Password',
         widget=forms.PasswordInput
@@ -50,13 +62,15 @@ class EmployeeForm(forms.ModelForm):
  
     class Meta:
         model = Employee
+        exclude = ['user']
         fields = ('name', 'contact','social_security', 'job_title', 'weekly_salary')
 
 class InvoiceForm(forms.ModelForm):
  
     class Meta:
         model = Invoice
-        fields = ('name', 'invoice_reference', 'amount')
+        exclude = ['user']
+        fields = ('name', 'invoice_type', 'invoice_reference', 'invoice_type', 'payment_frequency', 'amount')
 
 class CreditForm(forms.ModelForm):
  

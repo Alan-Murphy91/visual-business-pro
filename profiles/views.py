@@ -13,32 +13,47 @@ from django.shortcuts import render, get_object_or_404
 from django.utils import timezone
 from rest_framework.response import Response
 from rest_framework.views import APIView
-from .serializers import EmployeeSerializer, CreditSerializer
+from .serializers import EmployeeSerializer, CreditSerializer, InvoiceSerializer
 from .models import Employee, Invoice, Credit
 from .forms import EmployeeForm, InvoiceForm, CreditForm
 from django.shortcuts import redirect
 from django.core import serializers
+from django.conf import settings
+import datetime
+import stripe
+
+stripe.api_key = settings.STRIPE_SECRET
 
 def register(request):
     if request.method == 'POST':
         form = UserRegistrationForm(request.POST)
         if form.is_valid():
-            form.save()
- 
-            user = auth.authenticate(email=request.POST.get('email'),
-                                     password=request.POST.get('password1'))
- 
-            if user:
-                messages.success(request, "You have successfully registered")
-                return redirect(reverse('profile'))
- 
-            else:
-                messages.error(request, "unable to log you in at this time!")
- 
+            try:
+                customer = stripe.Charge.create(
+                        amount=7500,
+                        currency="USD",
+                        description=form.cleaned_data['email'],
+                        card=form.cleaned_data['stripe_id'],
+                )
+                if customer.paid:
+                    form.save()
+                    user = auth.authenticate(email=request.POST.get('email'),
+                                             password=request.POST.get('password1'))
+                    if user:
+                        auth.login(request, user)
+                        messages.success(request, "You have successfully registered")
+                        return redirect(reverse('profile'))
+                    else:
+                        messages.error(request, "unable to log you in at this time!")
+                else:
+                    messages.error(request, "We were unable to take a payment with that card!")
+            except stripe.error.CardError, e:
+                messages.error(request, "Your card was declined!")
     else:
+        today = datetime.date.today()
         form = UserRegistrationForm()
  
-    args = {'form': form}
+    args = {'form': form, 'publishable': settings.STRIPE_PUBLISHABLE}
     args.update(csrf(request))
  
     return render(request, 'register.html', args)
@@ -80,7 +95,7 @@ def new_employee(request):
         form = EmployeeForm(request.POST, request.FILES)
         if form.is_valid():
             post = form.save(commit=False)
-            post.author = request.user
+            post.user = request.user
             post.published_date = timezone.now()
             post.save()
             return render(request, "dashboard.html")
@@ -93,7 +108,7 @@ def new_invoice(request):
         form = InvoiceForm(request.POST, request.FILES)
         if form.is_valid():
             post = form.save(commit=False)
-            post.author = request.user
+            post.user = request.user
             post.published_date = timezone.now()
             post.save()
             return render(request, "dashboard.html")
@@ -111,7 +126,7 @@ def new_credit(request):
             post.save()
             return render(request, "dashboard.html")
     else:
-        form = CreditForm(initial={'test': request.user})
+        form = CreditForm()
     return render(request, "newcredit.html",{'form': form})
 
 def show_credit(request):
@@ -119,6 +134,9 @@ def show_credit(request):
 
 def show_employee(request):
     return render(request, 'employees.html')    
+
+def show_invoice(request):
+    return render(request, 'invoices.html')     
 
 
 class EmpView(APIView):
@@ -134,5 +152,13 @@ class CreditView(APIView):
     def get(self, request):
         Credit_items = Credit.objects.filter(user=request.user)
         serializer = CreditSerializer(Credit_items, many=True)
+        serialized_data = serializer.data
+        return Response(serialized_data)
+
+class InvoiceView(APIView):
+
+    def get(self, request):
+        Invoice_items = Invoice.objects.filter(user=request.user)
+        serializer = InvoiceSerializer(Invoice_items, many=True)
         serialized_data = serializer.data
         return Response(serialized_data)

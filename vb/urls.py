@@ -29,7 +29,9 @@ urlpatterns = [
     url(r'^newinvoice/$', profiles_views.new_invoice, name='newinvoice'),
     url(r'^newcredit/$', profiles_views.new_credit, name='newcredit'),
     url(r'^credits/$', profiles_views.show_credit, name='credits'),
-    url(r'^credits/$', profiles_views.show_employee, name='employees'),
+    url(r'^employees/$', profiles_views.show_employee, name='employees'),
+    url(r'^invoices/$', profiles_views.show_invoice, name='invoices'),
     url(r'^employees/api/data/$', profiles_views.EmpView.as_view()),
     url(r'^credits/api/data/$', profiles_views.CreditView.as_view()),
+    url(r'^invoices/api/data/$', profiles_views.InvoiceView.as_view()),
 ]

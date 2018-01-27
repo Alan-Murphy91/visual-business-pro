@@ -26,6 +26,7 @@ class Profile(UserManager):
         return user
  
 class User(AbstractUser):
+    stripe_id = models.CharField(max_length=40, default='')
     objects = Profile()
 
 class Employee(models.Model):
@@ -40,7 +41,9 @@ class Employee(models.Model):
 class Invoice(models.Model):
     user = models.ForeignKey(settings.AUTH_USER_MODEL, null=True)
     name = models.CharField(max_length=200)
+    invoice_type = models.CharField(max_length=200)
     invoice_reference = models.IntegerField()
+    payment_frequency = models.CharField(max_length=200)
     amount = models.IntegerField()
     date = models.DateTimeField(auto_now_add=True)
 
