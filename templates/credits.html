@@ -12,7 +12,7 @@
                 <div class="chart-stage">
                   <div id="timeChart"></div>
                 </div>
-              </div>
+            </div>
         </div>
         <div class="col-xs-12 col-sm-12 col-md-4">
             <div class="chart-wrapper">
@@ -93,7 +93,9 @@
                 var countryGroup = countryDim.group();
                 var payLocGroup = payLocDim.group();
                 var all = ndx.groupAll();
-
+                var totAll = ndx.groupAll().reduceSum(function(d){
+                return d["amount"]
+                });
                 var startDate = dateDim.bottom(1)[0].date;
                 var endDate = dateDim.top(1)[0].date;
 
@@ -120,9 +122,9 @@
                 
                 number
                     .height(280)
-                    .formatNumber(d3.format("d"))
-                    .valueAccessor(function(d){return d; })
-                    .group(all);
+                    .valueAccessor(function(d){
+                        return d; })
+                    .group(totAll);
 
                 payTypeChart
                     //.width(300)

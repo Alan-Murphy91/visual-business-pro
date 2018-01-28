@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import Employee, Invoice, Credit
+from .models import Employee, Invoice, Credit, Analytics
 
 class EmployeeSerializer(serializers.ModelSerializer):
 
@@ -17,4 +17,10 @@ class InvoiceSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Invoice
-        fields = ('name', 'invoice_type', 'payment_frequency', 'amount', 'date')        
+        fields = ('name', 'invoice_type', 'payment_frequency', 'amount', 'date')    
+
+class AnalyticsSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = Analytics
+        fields = ('clicks', 'impressions', 'conversions', 'sales', 'site', 'date')

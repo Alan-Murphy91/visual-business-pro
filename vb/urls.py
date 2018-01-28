@@ -28,10 +28,13 @@ urlpatterns = [
     url(r'^newemployee/$', profiles_views.new_employee, name='newemployee'),
     url(r'^newinvoice/$', profiles_views.new_invoice, name='newinvoice'),
     url(r'^newcredit/$', profiles_views.new_credit, name='newcredit'),
+    url(r'^newanalytics/$', profiles_views.new_analytics, name='newanalytics'),
     url(r'^credits/$', profiles_views.show_credit, name='credits'),
     url(r'^employees/$', profiles_views.show_employee, name='employees'),
     url(r'^invoices/$', profiles_views.show_invoice, name='invoices'),
+    url(r'^analytics/$', profiles_views.show_analytics, name='analytics'),
     url(r'^employees/api/data/$', profiles_views.EmpView.as_view()),
     url(r'^credits/api/data/$', profiles_views.CreditView.as_view()),
     url(r'^invoices/api/data/$', profiles_views.InvoiceView.as_view()),
+    url(r'^analytics/api/data/$', profiles_views.AnalyticsView.as_view()),
 ]

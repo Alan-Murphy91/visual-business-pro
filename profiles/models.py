@@ -42,7 +42,7 @@ class Invoice(models.Model):
     user = models.ForeignKey(settings.AUTH_USER_MODEL, null=True)
     name = models.CharField(max_length=200)
     invoice_type = models.CharField(max_length=200)
-    invoice_reference = models.IntegerField()
+    invoice_reference = models.CharField(max_length=200)
     payment_frequency = models.CharField(max_length=200)
     amount = models.IntegerField()
     date = models.DateTimeField(auto_now_add=True)
@@ -50,9 +50,18 @@ class Invoice(models.Model):
 class Credit(models.Model):
     user = models.ForeignKey(settings.AUTH_USER_MODEL, null=True)
     name = models.CharField(max_length=200)
-    payment_reference = models.IntegerField()
+    payment_reference = models.CharField(max_length=200)
     amount = models.IntegerField()
     payment_type = models.CharField(max_length=200,default='Paypal')
     country = models.CharField(max_length=200,default='Ireland')
     payment_location = models.CharField(max_length=200,default='On-site')
     date = models.DateTimeField(auto_now_add=True)
+
+class Analytics(models.Model):
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, null=True)
+    clicks = models.IntegerField()
+    impressions = models.IntegerField()
+    conversions = models.IntegerField()
+    sales = models.IntegerField()
+    site = models.CharField(max_length=200)
+    date = models.DateTimeField(auto_now_add=True)    

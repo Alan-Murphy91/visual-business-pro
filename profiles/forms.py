@@ -2,7 +2,7 @@ from django import forms
 from django.contrib.auth.forms import UserCreationForm
 from profiles.models import User
 from django.core.exceptions import ValidationError 
-from .models import Employee, Invoice, Credit
+from .models import Employee, Invoice, Credit, Analytics
  
 class UserRegistrationForm(UserCreationForm):
     MONTH_ABBREVIATIONS = [
@@ -78,3 +78,10 @@ class CreditForm(forms.ModelForm):
         model = Credit
         exclude = ['user']
         fields = ('name', 'payment_reference', 'amount', 'payment_type', 'country', 'payment_location')
+
+class AnalyticsForm(forms.ModelForm):
+ 
+    class Meta:
+        model = Analytics
+        exclude = ['user']
+        fields = ('clicks', 'impressions','conversions', 'sales', 'site')       

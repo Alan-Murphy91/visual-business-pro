@@ -29,18 +29,19 @@
                           <ul class="nav navbar-nav navbar-right">
                                 <li><a href="{% url 'credits' %}">Credit</a></li>
                                 <li><a href="{% url 'invoices' %}">Debt</a></li>
-                                <li><a href="{% url 'logout' %}">Site analytics</a></li>
-                                <li><a href="{% url 'logout' %}">Workforce</a></li>
+                                <li><a href="{% url 'analytics' %}">Site analytics</a></li>
+                                <li><a href="{% url 'employees' %}">Employees</a></li>
                                 <li class="dropdown">
                                 <a href="#" class="dropdown-toggle" data-toggle="dropdown">Add <b class="caret"></b></a>
                                 <ul class="dropdown-menu">
                                         <li><a href="{% url 'newemployee' %}">Add an Employee</a></li>
                                         <li><a href="{% url 'newinvoice' %}">Add a New Invoice</a></li>
                                         <li><a href="{% url 'newcredit' %}">Add a New Credit</a></li>
+                                        <li><a href="{% url 'newanalytics' %}">Add Daily Site Data</a></li>
                                 </ul>
                               </li>
                             <li>
-                              <a class="glyphicon glyphicon-log-in" href="{% url 'logout' %}"> My Dashboard </a>
+                              <!-- <a class="glyphicon glyphicon-log-in" href="{% url 'logout' %}"> My Dashboard </a> -->
                             </li>
                             <li>
                                 <a href="{% url 'logout' %}">Logout</a>

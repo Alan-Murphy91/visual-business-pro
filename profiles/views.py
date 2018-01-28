@@ -13,9 +13,9 @@ from django.shortcuts import render, get_object_or_404
 from django.utils import timezone
 from rest_framework.response import Response
 from rest_framework.views import APIView
-from .serializers import EmployeeSerializer, CreditSerializer, InvoiceSerializer
-from .models import Employee, Invoice, Credit
-from .forms import EmployeeForm, InvoiceForm, CreditForm
+from .serializers import EmployeeSerializer, CreditSerializer, InvoiceSerializer, AnalyticsSerializer
+from .models import Employee, Invoice, Credit, Analytics
+from .forms import EmployeeForm, InvoiceForm, CreditForm, AnalyticsForm
 from django.shortcuts import redirect
 from django.core import serializers
 from django.conf import settings
@@ -129,6 +129,19 @@ def new_credit(request):
         form = CreditForm()
     return render(request, "newcredit.html",{'form': form})
 
+def new_analytics(request):
+    if request.method == "POST":
+        form = AnalyticsForm(request.POST, request.FILES)
+        if form.is_valid():
+            post = form.save(commit=False)
+            post.user = request.user
+            post.published_date = timezone.now()
+            post.save()
+            return render(request, "dashboard.html")
+    else:
+        form = AnalyticsForm()
+    return render(request, "newanalytics.html",{'form': form})    
+
 def show_credit(request):
     return render(request, 'credits.html')
 
@@ -136,7 +149,10 @@ def show_employee(request):
     return render(request, 'employees.html')    
 
 def show_invoice(request):
-    return render(request, 'invoices.html')     
+    return render(request, 'invoices.html')    
+    
+def show_analytics(request):
+    return render(request, 'analytics.html')     
 
 
 class EmpView(APIView):
@@ -160,5 +176,13 @@ class InvoiceView(APIView):
     def get(self, request):
         Invoice_items = Invoice.objects.filter(user=request.user)
         serializer = InvoiceSerializer(Invoice_items, many=True)
+        serialized_data = serializer.data
+        return Response(serialized_data)
+
+class AnalyticsView(APIView):
+
+    def get(self, request):
+        Analytics_items = Analytics.objects.filter(user=request.user)
+        serializer = AnalyticsSerializer(Analytics_items, many=True)
         serialized_data = serializer.data
         return Response(serialized_data)

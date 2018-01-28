@@ -1,21 +1,150 @@
 {% extends "base1.html" %}
 {% block content %}
-    <h1>This is the Credit dashboard</h1>
-    <div>
-    </div>
-    <script>
-        $(document).ready(function(){
-        var endpoint = 'api/data/';
 
-        $.ajax({
-            method: 'GET',
-            url: endpoint,
-            success: function(data){
-                console.log(data);
-                console.log(typeof data);
-            }
-        })
-    });
-    </script>
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-4">
+            <div class="chart-wrapper">
+                <div class="chart-title">
+                  Number of Employees
+                </div>
+                <div class="xc chart-stage">
+                  <div id="employ"></div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="chart-wrapper">
+                <div class="chart-title">
+                  Job Title
+                </div>
+                <div class="xc chart-stage">
+                  <div id="jobtitle"></div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="chart-wrapper">
+                <div class="chart-title">
+                  Weekly Salary
+                </div>
+                <div class="xc chart-stage">
+                  <div id="salary"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-offset-4 col-sm-4">
+            <div class="chart-wrapper">
+                <div class="chart-title">
+                  Weekly Salary
+                </div>
+                <div class="xc chart-stage">
+                    <div style='clear:both;'>
+                        <table id="dc-data-table">
+                             <thead>
+                                  <tr class="header">
+                                       <th>Name</th>
+                                       <th>Job Title</th>
+                                       <th>Weekly Salary</th>
+                                  </tr>
+                             </thead>
+                        </table>
+                   </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<script>
+    $(document).ready(function(){
+    var endpoint = 'api/data/';
+    $.ajax({
+        method: 'GET',
+        url: endpoint,
+        success: function(data){
+            var ndx = crossfilter(data);
+            console.log(data);
+            var jobDim = ndx.dimension(function(d) { return d["job_title"]; });
+            var nameDim = ndx.dimension(function(d) { return d["name"]; });
+            var salaryDim = ndx.dimension(function(d) { return d["weekly_salary"]; });
+            
+            var jobGroup = jobDim.group()
+            var nameGroup =  nameDim.group();
+            var salaryGroup = salaryDim.group();
+            var all = ndx.groupAll();
+            var jobAll = ndx.groupAll().reduceSum(function(d){
+                return d["amount"]
+            });
+            var nameAll = ndx.groupAll().reduceSum(function(d){
+                return d["amount"]
+            });
+            var salaryAll = ndx.groupAll().reduceSum(function(d){
+                return d["amount"]
+            });
+
+            var employ = dc.numberDisplay("#employ");
+            var jobTitle = dc.rowChart("#jobtitle");
+            var salary = dc.pieChart("#salary");
+            var datatable = dc.dataTable("#dc-data-table");
+
+            datatable
+                .dimension(nameDim)
+                .group(function (d) {
+                    return d.job_title;
+                })
+                .columns([
+                    function (d) {
+                        return d.name + '&nbsp';
+                    },
+                    function (d) {
+                        return d.job_title + '&nbsp';
+                    },
+                    function (d) {
+                        return d.weekly_salary + '&nbsp';
+                    }
+                ]);
+
+            salary
+                .height(280)
+                .radius(160)
+                .innerRadius(45)
+                .dimension(salaryDim)
+                .group(salaryGroup)
+                .colors(d3.scale.ordinal().range(['#FDB592','#FEE29E','#50EFDA', '#692D8D', '#D564AB']))
+                .drawPaths(true)
+                .externalRadiusPadding(60)
+                .minAngleForLabel(0)
+                .externalLabels(40)
+                .renderLabel(true); 
+
+            employ
+                .height(280)
+                .formatNumber(d3.format("d"))
+                .valueAccessor(function(d){
+                    return d; })
+                .group(all);  
+
+            jobTitle
+                .height(280)
+                .dimension(jobDim)
+                .group(jobGroup)
+                .ordering(function(d) { return -d.value })
+                .colors(d3.scale.ordinal().range(['#51F5E0']))
+                .elasticX(true)
+                .xAxis().ticks(6);  
+
+             
+
+            dc.renderAll();
+
+        }
+    })
+});
+</script>
 
 {% endblock %}

@@ -1,0 +1,184 @@
+{% extends "base1.html" %}
+{% block content %}
+
+
+<div class="container">
+    <div class="row">
+        <div class="col-sm-12 col-md-3">
+            <div class="chart-wrapper">
+                <div class="chart-title">
+                  Impressions
+                </div>
+                <div class="chart-stage">
+                  <div id="impChart"></div>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-12 col-md-3">
+            <div class="chart-wrapper">
+                <div class="chart-title">
+                  Clicks
+                </div>
+                <div class="chart-stage">
+                  <div id="clickChart"></div>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-12 col-md-3">
+            <div class="chart-wrapper">
+                <div class="chart-title">
+                  Conversions
+                </div>
+                <div class="chart-stage">
+                  <div id="convChart"></div>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-12 col-md-3">
+            <div class="chart-wrapper">
+                <div class="chart-title">
+                  Sales
+                </div>
+                <div class="chart-stage">
+                  <div id="salesChart"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-12 col-md-7">
+            <div class="chart-wrapper">
+                <div class="chart-title">
+                  Timeline
+                </div>
+                <div class="chart-stage">
+                  <div id="dateChart"></div>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-12 col-md-5">
+            <div class="chart-wrapper">
+                <div class="chart-title">
+                  Site
+                </div>
+                <div class="chart-stage">
+                  <div id="siteChart"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+ 
+    <script>
+        $(document).ready(function(){
+        var endpoint = 'api/data/';
+
+        $.ajax({
+            method: 'GET',
+            url: endpoint,
+            success: function(data){
+                var parseDate = d3.time.format("%Y-%d-%m").parse;
+                data.forEach(function(d) {
+                  d.date = d.date.slice(0,10);
+                  d.date = parseDate(d.date);
+                });
+
+                var ndx = crossfilter(data);
+                var clickDim = ndx.dimension(function(d) { return d["clicks"]; });
+                var impDim = ndx.dimension(function(d) { return d["impressions"]; });
+                var convDim = ndx.dimension(function(d) { return d["conversions"]; });
+                var salesDim = ndx.dimension(function(d) { return d["sales"]; });
+                var siteDim = ndx.dimension(function(d) { return d["site"]; });
+                var dateDim = ndx.dimension(function(d) { return d["date"]; });
+
+                var clickGroup = clickDim.group();
+                var impGroup = impDim.group();
+                var convGroup =  convDim.group();
+                var salesGroup = salesDim.group();
+                var siteGroup = siteDim.group();
+                var dateGroup = dateDim.group();
+
+                var impAll = ndx.groupAll().reduceSum(function(d){
+                return d["impressions"]
+                });
+                var clickAll = ndx.groupAll().reduceSum(function(d){
+                return d["clicks"]
+                });
+                var convAll = ndx.groupAll().reduceSum(function(d){
+                return d["conversions"]
+                });
+                var saleAll = ndx.groupAll().reduceSum(function(d){
+                return d["sales"]
+                });
+                var startDate = dateDim.bottom(1)[0].date;
+                var endDate = dateDim.top(1)[0].date;     
+
+
+                var clickChart = dc.numberDisplay("#clickChart");
+                var impChart = dc.numberDisplay("#impChart");
+                var convChart = dc.numberDisplay("#convChart");
+                var salesChart = dc.numberDisplay("#salesChart");
+                var siteChart = dc.pieChart("#siteChart");
+                var dateChart = dc.barChart("#dateChart"); 
+
+
+                impChart
+                    .height(280)
+                    .valueAccessor(function(d){
+                        return d; })
+                    .group(impAll);
+
+                clickChart
+                    .height(280)
+                    .valueAccessor(function(d){
+                        return d; })
+                    .group(clickAll);
+
+                convChart
+                    .height(280)
+                    .valueAccessor(function(d){
+                        return d; })
+                    .group(convAll);
+
+                salesChart
+                    .height(280)
+                    .valueAccessor(function(d){
+                        return d; })
+                    .group(saleAll);
+
+                siteChart
+                    //.width(400)
+                    .height(280)
+                    .radius(160)
+                    .innerRadius(45)
+                    .dimension(siteDim)
+                    .group(siteGroup)
+                    .colors(d3.scale.ordinal().range(['#FDB592','#FEE29E','#50EFDA', '#692D8D', '#D564AB']))
+                    // .on('renderlet', function (chart) {
+                    //     chart.select("svg > g").attr("transform", "translate(200,170)");
+                    // })
+                    .drawPaths(true)
+                    .externalRadiusPadding(60)
+                    .minAngleForLabel(0)
+                    .externalLabels(40)
+                    .renderLabel(true);
+                
+                dateChart
+                    .width(650)
+                    .height(280)
+                    .margins({top: 10, right: 50, bottom: 20, left: 20})
+                    .dimension(dateDim)
+                    .group(dateGroup)
+                    .transitionDuration(500)
+                    .x(d3.time.scale().domain([startDate, endDate]))
+                      .elasticY(true)
+                      .colors(['#52FDE7'])
+                    .yAxis().ticks(2);
+
+                dc.renderAll();
+            }
+        });
+    });
+    </script>
+
+{% endblock %}
