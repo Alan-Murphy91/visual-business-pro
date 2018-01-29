@@ -2,14 +2,14 @@
 {% block content %}
 
 
-<div class="container">
+<div class="container" style="font-family:'Montserrat';">
     <div class="row">
         <div class="col-xs-12 col-sm-12 col-md-8">
             <div class="chart-wrapper">
                 <div class="chart-title">
-                  Number of Events
+                   <img src="https://i.imgur.com/Hkz8FKF.png" height="35" width="35"> &nbsp;Timeline
                 </div>
-                <div class="chart-stage">
+                <div class="chart-stage" style="background:#3A3D46;display:grid;justify-items:center;align-items:center;margin-bottom:10px">
                   <div id="timeChart"></div>
                 </div>
             </div>
@@ -17,9 +17,9 @@
         <div class="col-xs-12 col-sm-12 col-md-4">
             <div class="chart-wrapper">
                 <div class="chart-title">
-                  Number of Events
+                    <img src="https://i.imgur.com/24yRJ6B.png" height="35" width="35"> &nbsp;Location
                 </div>
-                <div class="chart-stage">
+                <div class="chart-stage" style="background:#3A3D46;display:grid;justify-items:center;align-items:center;margin-bottom:10px">
                   <div id="payLocChart"></div>
                 </div>
                 <br/>
@@ -30,9 +30,9 @@
         <div class="col-xs-12 col-sm-12 col-md-4">
             <div class="chart-wrapper">
                 <div class="chart-title">
-                  Number of Events
+                    <img src="https://i.imgur.com/oqYbTe2.png" height="35" width="35">  &nbsp;Payment Method
                 </div>
-                <div class="chart-stage">
+                <div class="chart-stage" style="background:#3A3D46;display:grid;justify-items:center;align-items:center;margin-bottom:10px">
                   <div id="payTypeChart"></div>
                 </div>
               </div>
@@ -40,9 +40,9 @@
         <div class="col-xs-12 col-sm-12 col-md-4">
             <div class="chart-wrapper">
                 <div class="chart-title">
-                  Number of Events
+                    <img src="https://i.imgur.com/DMoVxR4.png" height="35" width="35"> &nbsp;Country
                 </div>
-                <div class="chart-stage">
+                <div class="chart-stage" style="background:#3A3D46;display:grid;justify-items:center;align-items:center;margin-bottom:10px">
                   <div id="countryChart"></div>
                 </div>
               </div>
@@ -50,9 +50,9 @@
         <div class="col-xs-12 col-sm-12 col-md-4">
             <div class="chart-wrapper">
                 <div class="chart-title">
-                  Number of Events
+                    <img src="https://i.imgur.com/n5xeXI6.png" height="35" width="35"> &nbsp;Revenue
                 </div>
-                <div class="xc chart-stage">
+                <div class="xc chart-stage" style="background:#3A3D46;display:grid;justify-items:center;align-items:center;font-size:7em;margin-bottom:10px">
                   <div id="numberChart"></div>
                 </div>
               </div>
@@ -132,9 +132,10 @@
                     .dimension(payTypeDim)
                     .group(payTypeGroup)
                     .ordering(function(d) { return -d.value })
-                    .colors(d3.scale.ordinal().range(['#51F5E0']))
+                    .colors(d3.scale.ordinal().range(['#0690EB','#60476F', '#F1A52B', '#38BA70', '#DA1F10']))
                     .elasticX(true)
-                    .xAxis().ticks(6);
+                    .xAxis().ticks(6)
+                    .tickFormat(d3.format(''));
 
                 countryChart
                     //.width(300)
@@ -142,9 +143,10 @@
                     .dimension(countryDim)
                     .group(countryGroup)
                     .ordering(function(d) { return -d.value })
-                    .colors(d3.scale.ordinal().range(['#51F5E0']))
+                    .colors(d3.scale.ordinal().range(['#0690EB','#60476F', '#F1A52B', '#38BA70', '#DA1F10']))
                     .elasticX(true)
-                    .xAxis().ticks(6);
+                    .xAxis().ticks(6)
+                    .tickFormat(d3.format(''));
 
                 payRefChart
                     //.width(300)
@@ -152,7 +154,7 @@
                     .dimension(payRefDim)
                     .group(payRefGroup)
                     .ordering(function(d) { return -d.value })
-                    .colors(d3.scale.ordinal().range(['#51F5E0']))
+                    .colors(d3.scale.ordinal().range(['#0690EB','#60476F', '#F1A52B', '#38BA70', '#DA1F10']))
                     .elasticX(true)
                     .xAxis().ticks(6);
 
@@ -163,7 +165,7 @@
                     .innerRadius(45)
                     .dimension(payLocDim)
                     .group(payLocGroup)
-                    .colors(d3.scale.ordinal().range(['#FDB592','#FEE29E','#50EFDA', '#692D8D', '#D564AB']))
+                    .colors(d3.scale.ordinal().range(['#0690EB','#60476F','#F1A52B', '#38BA70', '#DA1F10']))
                     // .on('renderlet', function (chart) {
                     //     chart.select("svg > g").attr("transform", "translate(200,170)");
                     // })
@@ -174,7 +176,7 @@
                     .renderLabel(true);
 
                 timeChart
-                    .width(650)
+                    .width(590)
                     .height(280)
                     .margins({top: 10, right: 50, bottom: 20, left: 20})
                     .dimension(dateDim)
@@ -182,8 +184,9 @@
                     .transitionDuration(500)
                     .x(d3.time.scale().domain([startDate, endDate]))
                       .elasticY(true)
-                      .colors(['#52FDE7'])
-                    .yAxis().ticks(2);
+                      .colors(['#1183F6'])
+                    .yAxis().ticks(2)
+                    .tickFormat(d3.format(''));
 
 
                 dc.renderAll();

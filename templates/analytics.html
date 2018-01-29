@@ -2,14 +2,14 @@
 {% block content %}
 
 
-<div class="container">
+<div class="container" style="font-family:'Montserrat';"></div>
     <div class="row">
         <div class="col-sm-12 col-md-3">
             <div class="chart-wrapper">
                 <div class="chart-title">
-                  Impressions
+                        <img src="https://i.imgur.com/67IH0Kz.png" height="35" width="35"> &nbsp;Impressions
                 </div>
-                <div class="chart-stage">
+                <div class="chart-stage" style="background:#3A3D46;display:grid;justify-items:center;align-items:center;margin-bottom:10px;font-size:7em;">
                   <div id="impChart"></div>
                 </div>
             </div>
@@ -17,9 +17,9 @@
         <div class="col-sm-12 col-md-3">
             <div class="chart-wrapper">
                 <div class="chart-title">
-                  Clicks
+                        <img src="https://i.imgur.com/A7BEPLM.png" height="35" width="35"> &nbsp;Clicks
                 </div>
-                <div class="chart-stage">
+                <div class="chart-stage" style="background:#3A3D46;display:grid;justify-items:center;align-items:center;margin-bottom:10px;font-size:7em;">
                   <div id="clickChart"></div>
                 </div>
             </div>
@@ -27,9 +27,9 @@
         <div class="col-sm-12 col-md-3">
             <div class="chart-wrapper">
                 <div class="chart-title">
-                  Conversions
+                        <img src="https://i.imgur.com/6940h67.png" height="35" width="35"> &nbsp;Conversions
                 </div>
-                <div class="chart-stage">
+                <div class="chart-stage" style="background:#3A3D46;display:grid;justify-items:center;align-items:center;margin-bottom:10px;font-size:7em;">
                   <div id="convChart"></div>
                 </div>
             </div>
@@ -37,9 +37,9 @@
         <div class="col-sm-12 col-md-3">
             <div class="chart-wrapper">
                 <div class="chart-title">
-                  Sales
+                        <img src="https://i.imgur.com/do7JsiO.png" height="35" width="35"> &nbsp;Sales
                 </div>
-                <div class="chart-stage">
+                <div class="chart-stage" style="background:#3A3D46;display:grid;justify-items:center;align-items:center;margin-bottom:10px;font-size:7em;">
                   <div id="salesChart"></div>
                 </div>
             </div>
@@ -49,9 +49,9 @@
         <div class="col-sm-12 col-md-7">
             <div class="chart-wrapper">
                 <div class="chart-title">
-                  Timeline
+                        <img src="https://i.imgur.com/Hkz8FKF.png" height="35" width="35"> &nbsp;Timeline
                 </div>
-                <div class="chart-stage">
+                <div class="chart-stage" style="background:#3A3D46;display:grid;justify-items:center;align-items:center;margin-bottom:10px">
                   <div id="dateChart"></div>
                 </div>
             </div>
@@ -59,10 +59,10 @@
         <div class="col-sm-12 col-md-5">
             <div class="chart-wrapper">
                 <div class="chart-title">
-                  Site
+                        <img src="https://i.imgur.com/Jtj5vWp.png" height="35" width="35"> &nbsp;Site
                 </div>
-                <div class="chart-stage">
-                  <div id="siteChart"></div>
+                <div class="chart-stage" style="background:#3A3D46;display:grid;justify-items:center;align-items:center;margin-bottom:10px">
+                    <div id="siteChart"></div>
                 </div>
             </div>
         </div>
@@ -153,7 +153,7 @@
                     .innerRadius(45)
                     .dimension(siteDim)
                     .group(siteGroup)
-                    .colors(d3.scale.ordinal().range(['#FDB592','#FEE29E','#50EFDA', '#692D8D', '#D564AB']))
+                    .colors(d3.scale.ordinal().range(['#0690EB','#60476F', '#F1A52B', '#38BA70', '#DA1F10']))
                     // .on('renderlet', function (chart) {
                     //     chart.select("svg > g").attr("transform", "translate(200,170)");
                     // })
@@ -164,7 +164,7 @@
                     .renderLabel(true);
                 
                 dateChart
-                    .width(650)
+                    .width(590)
                     .height(280)
                     .margins({top: 10, right: 50, bottom: 20, left: 20})
                     .dimension(dateDim)
@@ -172,7 +172,7 @@
                     .transitionDuration(500)
                     .x(d3.time.scale().domain([startDate, endDate]))
                       .elasticY(true)
-                      .colors(['#52FDE7'])
+                      .colors(['#1183F6'])
                     .yAxis().ticks(2);
 
                 dc.renderAll();

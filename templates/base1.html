@@ -4,7 +4,7 @@
 <head>
     <meta charset="utf-8">
     <title>Visual Business Pro</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=0.8">
     {% include 'base/basestyle.html' %}
     {% include 'base/basejs.html' %}
     {% include 'base/stripe.html' %}
@@ -22,17 +22,17 @@
                             <span class="icon-bar"></span>
                             <span class="icon-bar"></span>
                           </button>
-                          <a href="{% url 'index' %}" class="navbar-brand">VBP</a>
+                          <a href="{% url 'index' %}" class="navbar-brand" style="font-family:'Roboto';line-height:30px">Visual Business Pro</a>
                         </div>
                         <nav class="collapse navbar-collapse bs-navbar-collapse" role="navigation">
                         {% if user.is_authenticated %}  
                           <ul class="nav navbar-nav navbar-right">
-                                <li><a href="{% url 'credits' %}">Credit</a></li>
-                                <li><a href="{% url 'invoices' %}">Debt</a></li>
-                                <li><a href="{% url 'analytics' %}">Site analytics</a></li>
-                                <li><a href="{% url 'employees' %}">Employees</a></li>
+                                <li><a href="{% url 'credits' %}"><img src="https://i.imgur.com/TyHxIqJ.png" height="30" width="30"> Credit</a></li>
+                                <li><a href="{% url 'invoices' %}"><img src="https://i.imgur.com/hLQsxIR.png" height="30" width="30"> Debt</a></li>
+                                <li><a href="{% url 'analytics' %}"><img src="https://i.imgur.com/LwK77Av.png" height="30" width="30"> Site analytics</a></li>
+                                <li><a href="{% url 'employees' %}"><img src="https://i.imgur.com/TIFP6lH.png" height="30" width="30"> Employees</a></li>
                                 <li class="dropdown">
-                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">Add <b class="caret"></b></a>
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown"><img src="https://i.imgur.com/zIGnX30.png" height="30" width="30"> Add <b class="caret"></b></a>
                                 <ul class="dropdown-menu">
                                         <li><a href="{% url 'newemployee' %}">Add an Employee</a></li>
                                         <li><a href="{% url 'newinvoice' %}">Add a New Invoice</a></li>
@@ -44,16 +44,16 @@
                               <!-- <a class="glyphicon glyphicon-log-in" href="{% url 'logout' %}"> My Dashboard </a> -->
                             </li>
                             <li>
-                                <a href="{% url 'logout' %}">Logout</a>
+                                <a href="{% url 'logout' %}"><img src="https://i.imgur.com/RBuuvVj.png" height="30" width="30"> Logout</a>
                             </li>
                           </ul>
                           {% else %}
                           <ul class="nav navbar-nav navbar-right">
                                 <li>
-                                    <a href="{% url 'register' %}">Register</a>
+                                    <a href="{% url 'register' %}"><img src="https://i.imgur.com/v4BNJna.png" height="30" width="30"> Register</a>
                                 </li>
                                 <li>
-                                    <a class="glyphicon glyphicon-tasks" href="{% url 'login' %}"> My Dashboard</a>
+                                    <a href="{% url 'login' %}"><img src="https://i.imgur.com/qiuCm6S.png" height="30" width="30"> My Dashboard</a>
                                 </li>
                               </ul>
                               {% endif %}                          
@@ -68,7 +68,6 @@
                     {% endblock %}
             </div>
             <div class="col-xs-12 footer">
-                    <p>Powered by Django</p>
             </div>
         </div>
     </div>

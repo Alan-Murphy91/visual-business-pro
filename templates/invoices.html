@@ -2,14 +2,14 @@
 {% block content %}
 
 
-<div class="container">
+<div class="container" style="font-family:'Montserrat';">
     <div class="row">
         <div class="col-xs-12 col-sm-12 col-md-8">
             <div class="chart-wrapper">
                 <div class="chart-title">
-                  Number of Events
+                    <img src="https://i.imgur.com/Hkz8FKF.png" height="35" width="35"> &nbsp;Timeline
                 </div>
-                <div class="chart-stage">
+                <div class="chart-stage" style="background:#3A3D46;display:grid;justify-items:center;align-items:center;margin-bottom:10px">
                   <div id="dateChart"></div>
                 </div>
               </div>
@@ -17,9 +17,9 @@
         <div class="col-xs-12 col-sm-12 col-md-4">
             <div class="chart-wrapper">
                 <div class="chart-title">
-                  Number of Events
+                    <img src="https://i.imgur.com/DZ4i9jZ.png" height="35" width="35"> &nbsp;Payment Frequency
                 </div>
-                <div class="chart-stage">
+                <div class="chart-stage" style="background:#3A3D46;display:grid;justify-items:center;align-items:center;margin-bottom:10px">
                   <div id="payFreqChart"></div>
                 </div>
                 <br/>
@@ -30,9 +30,9 @@
         <div class="col-xs-12 col-sm-12 col-md-4">
             <div class="chart-wrapper">
                 <div class="chart-title">
-                  Cash
+                    <img src="https://i.imgur.com/UpEUa3m.png" height="35" width="35"> &nbsp;Loss
                 </div>
-                <div class="chart-stage">
+                <div class="chart-stage" style="background:#3A3D46;display:grid;justify-items:center;align-items:center;font-size:7em;margin-bottom:10px">
                   <div id="typeChart"></div>
                 </div>
               </div>
@@ -40,9 +40,9 @@
         <div class="col-xs-12 col-sm-12 col-md-4">
             <div class="chart-wrapper">
                 <div class="chart-title">
-                  Number of Events
+                    <img src="https://i.imgur.com/jRQJveU.png" height="35" width="35"> &nbsp;Bill
                 </div>
-                <div class="chart-stage">
+                <div class="chart-stage" style="background:#3A3D46;display:grid;justify-items:center;align-items:center;margin-bottom:10px">
                     <div id="nameChart"></div>
                 </div>
               </div>
@@ -50,9 +50,9 @@
         <div class="col-xs-12 col-sm-12 col-md-4">
             <div class="chart-wrapper">
                 <div class="chart-title">
-                  Number of Events
+                    <img src="https://i.imgur.com/P1WpXel.png" height="35" width="35"> &nbsp;Events
                 </div>
-                <div class="xc chart-stage">
+                <div class="xc chart-stage" style="background:#3A3D46;display:grid;justify-items:center;align-items:center;font-size:7em;margin-bottom:10px">
                   <div id="amountChart"></div>
                 </div>
               </div>
@@ -111,7 +111,7 @@
                     .dimension(nameDim)
                     .group(nameGroup)
                     .ordering(function(d) { return -d.value })
-                    .colors(d3.scale.ordinal().range(['#51F5E0']))
+                    .colors(d3.scale.ordinal().range(['#0690EB','#60476F','#F1A52B', '#38BA70', '#DA1F10']))
                     .elasticX(true)
                     .xAxis().ticks(6);
                 
@@ -135,7 +135,7 @@
                     .innerRadius(45)
                     .dimension(payFreqDim)
                     .group(payFreqGroup)
-                    .colors(d3.scale.ordinal().range(['#FDB592','#FEE29E','#50EFDA', '#692D8D', '#D564AB']))
+                    .colors(d3.scale.ordinal().range(['#0690EB','#60476F','#F1A52B', '#38BA70', '#DA1F10']))
                     // .on('renderlet', function (chart) {
                     //     chart.select("svg > g").attr("transform", "translate(200,170)");
                     // })
@@ -146,7 +146,7 @@
                     .renderLabel(true);
 
                 dateChart
-                    .width(650)
+                    .width(590)
                     .height(280)
                     .margins({top: 10, right: 50, bottom: 20, left: 20})
                     .dimension(dateDim)
@@ -154,7 +154,7 @@
                     .transitionDuration(500)
                     .x(d3.time.scale().domain([startDate, endDate]))
                       .elasticY(true)
-                      .colors(['#52FDE7'])
+                      .colors(['#1183F6'])
                     .yAxis().ticks(2);
 
 
