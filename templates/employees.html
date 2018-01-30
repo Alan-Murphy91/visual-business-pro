@@ -2,7 +2,7 @@
 {% block content %}
 
 
-<div class="container">
+<div class="container" style="font-family:'Montserrat';">
     <div class="row">
         <div class="col-md-4">
             <div class="chart-wrapper">
@@ -39,9 +39,9 @@
         <div class="col-sm-offset-4 col-sm-4">
             <div class="chart-wrapper">
                 <div class="chart-title">
-                    &nbsp;
+                    <img src="https://i.imgur.com/4weOOWY.png" height="35" width="35"> &nbsp;Employees
                 </div>
-                <div class="xc chart-stage" style="background:#3A3D46;display:grid;justify-items:center;align-items:center;margin-bottom:10px">
+                <div class="xc chart-stage" style="background:#3A3D46;display:grid;justify-items:center;margin-bottom:10px;overflow-y: scroll;">
                     <div style='clear:both;'>
                         <table id="dc-data-table">
                              <thead>
@@ -112,7 +112,7 @@
                 .innerRadius(45)
                 .dimension(salaryDim)
                 .group(salaryGroup)
-                .colors(d3.scale.ordinal().range(['#FDB592','#FEE29E','#50EFDA', '#692D8D', '#D564AB']))
+                .colors(d3.scale.ordinal().range(['#0690EB','#60476F', '#F1A52B', '#38BA70', '#DA1F10']))
                 .drawPaths(true)
                 .externalRadiusPadding(60)
                 .minAngleForLabel(0)
@@ -129,7 +129,7 @@
                 .dimension(jobDim)
                 .group(jobGroup)
                 .ordering(function(d) { return -d.value })
-                .colors(d3.scale.ordinal().range(['#51F5E0']))
+                .colors(d3.scale.ordinal().range(['#0690EB','#60476F', '#F1A52B', '#38BA70', '#DA1F10']))
                 .elasticX(true)
                 .xAxis().ticks(6);  
              

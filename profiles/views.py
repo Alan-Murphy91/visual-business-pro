@@ -15,7 +15,7 @@ from rest_framework.response import Response
 from rest_framework.views import APIView
 from .serializers import EmployeeSerializer, CreditSerializer, InvoiceSerializer, AnalyticsSerializer
 from .models import Employee, Invoice, Credit, Analytics
-from .forms import EmployeeForm, InvoiceForm, CreditForm, AnalyticsForm
+from .forms import EmployeeForm, InvoiceForm, CreditForm, AnalyticsForm, delete_EmployeeForm, delete_InvoiceForm, delete_CreditForm
 from django.shortcuts import redirect
 from django.core import serializers
 from django.conf import settings
@@ -103,6 +103,18 @@ def new_employee(request):
         form = EmployeeForm()
     return render(request, "newemployee.html",{'form': form})
 
+def employee_delete(request):
+    if request.method == "POST":
+        form = delete_EmployeeForm(request.POST, request.FILES)
+        if form.is_valid():
+            instance = Employee.objects.filter(user=request.user)
+            instance = instance.get(social_security=request.POST['social_security'])
+            instance.delete()
+            return render(request, "delete.html")
+    else:
+        form = delete_EmployeeForm()
+    return render(request, "deleteemployee.html",{'form': form})
+
 def new_invoice(request):
     if request.method == "POST":
         form = InvoiceForm(request.POST, request.FILES)
@@ -116,6 +128,21 @@ def new_invoice(request):
         form = InvoiceForm()
     return render(request, "newinvoice.html",{'form': form})
 
+def invoice_delete(request):
+    if request.method == "POST":
+        form = delete_InvoiceForm(request.POST, request.FILES)
+        if form.is_valid():
+            try:
+                instance = Invoice.objects.filter(user=request.user)
+                instance = instance.get(invoice_reference=request.POST['invoice_reference'])
+                instance.delete()
+                return render(request, "delete.html")
+            except ValueError:
+                print "oops! That wasn't a valid record. Please try again."
+    else:
+        form = delete_InvoiceForm()
+    return render(request, "deleteinvoice.html",{'form': form})    
+
 def new_credit(request):
     if request.method == "POST":
         form = CreditForm(request.POST, request.FILES)
@@ -128,6 +155,18 @@ def new_credit(request):
     else:
         form = CreditForm()
     return render(request, "newcredit.html",{'form': form})
+
+def credit_delete(request):
+    if request.method == "POST":
+        form = delete_CreditForm(request.POST, request.FILES)
+        if form.is_valid():
+            instance = Credit.objects.filter(user=request.user)
+            instance = instance.get(payment_reference=request.POST['payment_reference'])
+            instance.delete()
+            return render(request, "delete.html")
+    else:
+        form = delete_CreditForm()
+    return render(request, "deletecredit.html",{'form': form})    
 
 def new_analytics(request):
     if request.method == "POST":

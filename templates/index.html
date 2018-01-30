@@ -1,8 +1,35 @@
 {% extends "base1.html" %}
 {% block content %}
-    <h2>Welcome to visual business pro</h2>
-    <p>a website that visualises all your company data for hassle-free analysis</p>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.5.2/animate.min.css">
+    <style>
+        
+    body {
+        background: black;
+    }
 
+    button:hover{
+        filter: brightness(140%);
+    }
+
+    /* @media only screen and (max-width: 500px) {
+    .hero {
+        margin-left: 115px;
+    } */
+    }
+
+    </style>
+    <div style="display:grid;justify-items:center;align-items:center;font-family:'Montserrat';font-size:2em;">
+        <br>
+        <br>
+        <br>
+        <p class="hero">Harness The Power of Data Visualisation to give Stunning<br/> Visual Representations to Your Company Data.</p>
+        <br>
+        <button onclick="location.href='{% url 'register' %}'" type="button" style="background-color:#000;border:1px solid #1E72BD;border-radius:4px;color:#1E72BD">Register</button>
+        <br>
+        <br>
+        <br>
+        <img class="img-responsive animated fadeIn" src="https://i.imgur.com/CcJaVhb.png">
+    </div>
 
     <script>
     </script>

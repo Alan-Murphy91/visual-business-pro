@@ -63,7 +63,14 @@ class EmployeeForm(forms.ModelForm):
     class Meta:
         model = Employee
         exclude = ['user']
-        fields = ('name', 'contact','social_security', 'job_title', 'weekly_salary')
+        fields = ('name', 'contact','social_security', 'job_title', 'weekly_salary')   
+
+class delete_EmployeeForm(forms.ModelForm):
+ 
+    class Meta:
+        model = Employee
+        exclude = ['user']
+        fields = ('name','social_security')     
 
 class InvoiceForm(forms.ModelForm):
  
@@ -72,12 +79,26 @@ class InvoiceForm(forms.ModelForm):
         exclude = ['user']
         fields = ('name', 'invoice_type', 'invoice_reference', 'invoice_type', 'payment_frequency', 'amount')
 
+class delete_InvoiceForm(forms.ModelForm):
+ 
+    class Meta:
+        model = Invoice
+        exclude = ['user']
+        fields = ('name','invoice_reference')   
+
 class CreditForm(forms.ModelForm):
  
     class Meta:
         model = Credit
         exclude = ['user']
         fields = ('name', 'payment_reference', 'amount', 'payment_type', 'country', 'payment_location')
+
+class delete_CreditForm(forms.ModelForm):
+ 
+    class Meta:
+        model = Credit
+        exclude = ['user']
+        fields = ('name','payment_reference')  
 
 class AnalyticsForm(forms.ModelForm):
  
