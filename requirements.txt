@@ -8,3 +8,4 @@ pytz==2017.3
 requests==2.18.4
 stripe==1.77.1
 urllib3==1.22
+gunicorn==19.4
