@@ -14,6 +14,7 @@ STRIPE_PUBLISHABLE = os.getenv('STRIPE_PUBLISHABLE', 'pk_test_ehLvAcTuMRNOETWLiW
 STRIPE_SECRET = os.getenv('STRIPE_SECRET', 'sk_test_DTljbH6TXFcvZURKl8MB2Ryk')
  
 SITE_URL = 'https://visualbusinesspro.herokuapp.com/'
+ALLOWED_HOSTS = ['*']
 ALLOWED_HOSTS.append('visualbusinesspro.herokuapp.com')
  
 # Log DEBUG information to the console
