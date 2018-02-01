@@ -9,7 +9,7 @@
                 <div class="chart-title">
                    <img src="https://i.imgur.com/Hkz8FKF.png" height="35" width="35"> &nbsp;Timeline
                 </div>
-                <div class="chart-stage" style="background:#3A3D46;display:grid;justify-items:center;align-items:center;margin-bottom:10px">
+                <div class="chart-stage time" style="background:#3A3D46;display:grid;justify-items:center;align-items:center;margin-bottom:10px">
                   <div id="timeChart"></div>
                 </div>
             </div>
@@ -62,13 +62,17 @@
  
     <script>
         $(document).ready(function(){
+
+        $(".time").mCustomScrollbar({
+            axis:"x"
+        });
+
         var endpoint = 'api/data/';
 
         $.ajax({
             method: 'GET',
             url: endpoint,
             success: function(data){
-                console.log(data);
                var parseDate = d3.time.format("%Y-%d-%m").parse;
                data.forEach(function(d) {
                   d.date = d.date.slice(0,10);

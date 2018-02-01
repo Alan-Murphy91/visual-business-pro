@@ -51,7 +51,7 @@
                 <div class="chart-title">
                         <img src="https://i.imgur.com/Hkz8FKF.png" height="35" width="35"> &nbsp;Timeline
                 </div>
-                <div class="chart-stage" style="background:#3A3D46;display:grid;justify-items:center;align-items:center;margin-bottom:10px">
+                <div class="chart-stage time" style="background:#3A3D46;display:grid;justify-items:center;align-items:center;margin-bottom:10px">
                   <div id="dateChart"></div>
                 </div>
             </div>
@@ -72,6 +72,10 @@
     <script>
         $(document).ready(function(){
         var endpoint = 'api/data/';
+
+        $(".time").mCustomScrollbar({
+            axis:"x"
+        });
 
         $.ajax({
             method: 'GET',
