@@ -41,7 +41,7 @@
                 <div class="chart-title">
                     <img src="https://i.imgur.com/4weOOWY.png" height="35" width="35"> &nbsp;Employees
                 </div>
-                <div class="xc chart-stage" style="background:#3A3D46;display:grid;justify-items:center;margin-bottom:10px;overflow-y: scroll;">
+                <div class="xc chart-stage time" style="background:#3A3D46;display:grid;justify-items:center;margin-bottom:10px;">
                     <div style='clear:both;'>
                         <table id="dc-data-table">
                              <thead>
@@ -63,6 +63,11 @@
 <script>
     $(document).ready(function(){
     var endpoint = 'api/data/';
+
+    $(".time").mCustomScrollbar({
+            axis:"y"
+    });
+
     $.ajax({
         method: 'GET',
         url: endpoint,
