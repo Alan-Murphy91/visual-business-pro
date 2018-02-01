@@ -41,8 +41,6 @@ with d3. As it happens the d3 date parser produces a value quite a bit different
 file a for each function that slices the d/m/y from the string that wasn't working and parses it into something d3 liked. Apart from
 that everything worked as intended and the data is interactive.
 
-The other javascript file used is a responsive scrollbar for the timeline barcharts, credit for that goes to malihu http://manos.malihu.gr/jquery-custom-content-scroller/
-
 # Responsive
 
 The site displays as expected on mobile and tablet thanks to bootstraps grid system. The barcharts that signify dates tended
@@ -54,5 +52,10 @@ didn't have to use any media queries for this project as the grid and css grid c
 The app is currently served on heroku and connected to this repository. In order to do this I created a runtime file, to declare 
 python 2.7 environment and requirements.txt in root ensured the necessary libraries were imported. I then 'scaled my dynos' with the Procfile.
 I initially had trouble with this as I had the procfile one level too high for heroku to see.
+
+# References/Credit
+
+I based the auth code and stripe card jquery off material from the course, I believe this is Aaron Sinnot or Alisa Kennedys code. There wasn't any point in reinventing the wheel here so just used what worked in the course.
+The custom scrollbar is by Milahu http://manos.malihu.gr/jquery-custom-content-scroller/
 
 
