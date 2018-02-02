@@ -89,7 +89,7 @@ def logout(request):
     messages.success(request, 'You have successfully logged out')
     return redirect(reverse('index'))
 
-
+@login_required(login_url='/login/')
 def new_employee(request):
     if request.method == "POST":
         form = EmployeeForm(request.POST, request.FILES)
@@ -103,6 +103,7 @@ def new_employee(request):
         form = EmployeeForm()
     return render(request, "newemployee.html",{'form': form})
 
+@login_required(login_url='/login/')
 def employee_delete(request):
     if request.method == "POST":
         form = delete_EmployeeForm(request.POST, request.FILES)
@@ -115,6 +116,7 @@ def employee_delete(request):
         form = delete_EmployeeForm()
     return render(request, "deleteemployee.html",{'form': form})
 
+@login_required(login_url='/login/')
 def new_invoice(request):
     if request.method == "POST":
         form = InvoiceForm(request.POST, request.FILES)
@@ -128,6 +130,7 @@ def new_invoice(request):
         form = InvoiceForm()
     return render(request, "newinvoice.html",{'form': form})
 
+@login_required(login_url='/login/')
 def invoice_delete(request):
     if request.method == "POST":
         form = delete_InvoiceForm(request.POST, request.FILES)
@@ -143,6 +146,7 @@ def invoice_delete(request):
         form = delete_InvoiceForm()
     return render(request, "deleteinvoice.html",{'form': form})    
 
+@login_required(login_url='/login/')
 def new_credit(request):
     if request.method == "POST":
         form = CreditForm(request.POST, request.FILES)
@@ -156,6 +160,7 @@ def new_credit(request):
         form = CreditForm()
     return render(request, "newcredit.html",{'form': form})
 
+@login_required(login_url='/login/')
 def credit_delete(request):
     if request.method == "POST":
         form = delete_CreditForm(request.POST, request.FILES)
@@ -168,6 +173,7 @@ def credit_delete(request):
         form = delete_CreditForm()
     return render(request, "deletecredit.html",{'form': form})    
 
+@login_required(login_url='/login/')
 def new_analytics(request):
     if request.method == "POST":
         form = AnalyticsForm(request.POST, request.FILES)
@@ -181,15 +187,19 @@ def new_analytics(request):
         form = AnalyticsForm()
     return render(request, "newanalytics.html",{'form': form})    
 
+@login_required(login_url='/login/')
 def show_credit(request):
     return render(request, 'credits.html')
 
+@login_required(login_url='/login/')
 def show_employee(request):
     return render(request, 'employees.html')    
 
+@login_required(login_url='/login/')
 def show_invoice(request):
     return render(request, 'invoices.html')    
     
+@login_required(login_url='/login/')    
 def show_analytics(request):
     return render(request, 'analytics.html')     
 

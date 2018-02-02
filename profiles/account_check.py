@@ -1,5 +1,6 @@
 from models import User
  
+ 
 class NewAuth(object):
  
     def authenticate(self, email=None, password=None):
