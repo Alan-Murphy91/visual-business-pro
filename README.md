@@ -55,7 +55,7 @@ I initially had trouble with this as I had the procfile one level too high for h
 
 # References/Credit
 
-I based the auth code and stripe card jquery off material from the course, I believe this is Aaron Sinnot or Alisa Kennedys code.
+I based the auth code and stripe card jquery off material from the course.
 The custom scrollbar is by Milahu http://manos.malihu.gr/jquery-custom-content-scroller/
 
 
