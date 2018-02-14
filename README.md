@@ -50,7 +50,7 @@ didn't have to use any media queries for this project as the grid and css grid c
 # Hosting
 
 The app is currently served on heroku and connected to this repository. In order to do this I created a runtime file, to declare 
-python 2.7 environment and requirements.txt in root ensured the necessary libraries were imported. I then 'scaled my dynos' with the Procfile.
+python 2.7 environment and requirements.txt in root ensured the necessary libraries were imported. I then scaled my dynos with the Procfile.
 I initially had trouble with this as I had the procfile one level too high for heroku to see.
 
 # References/Credit
