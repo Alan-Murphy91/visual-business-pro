@@ -4,7 +4,7 @@ metrics and have them displayed as interactive data visualisations using d3, it 
 managers to home in on key metrics and see what was performing best and when, or what losses occured, why and when. It also allows
 employers to track employee count and wage
 
-Hosted location -> https://visualbusinesspro.herokuapp.com/
+# Hosted location -> https://visualbusinesspro.herokuapp.com/
 # please use the following login details to view pre-populated dashboards
 # email: alanjmurphy91@gmail.com , password: alan
 
